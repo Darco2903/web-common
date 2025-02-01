@@ -1,7 +1,9 @@
 const hostname = new URL(document.baseURI).hostname;
-export const DOMAIN =
-    !["localhost", "127.0.0.1"].includes(hostname) && hostname.match(/\./g).length > 1 ? hostname.replace(/^[^.]+\./g, "") : hostname;
+const isLocalhost = !["localhost", "127.0.0.1"].includes(hostname) && hostname.match(/\./g).length > 1;
+export const DOMAIN = isLocalhost ? hostname.replace(/^[^.]+\./g, "") : hostname;
 export const IS_MOBILE = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+const BYTES_UNITS = ["", "k", "M", "G", "T", "P", "E", "Z", "Y"];
 
 export function hasCookie(name) {
     return document.cookie.includes(name);
@@ -14,22 +16,7 @@ export function getCookie(name) {
         ?.split("=")[1];
 }
 
-/**
- * Sets a cookie
- * @param {string} name
- * @param {string} value
- * @param {object} [#data]
- * @param {string} [#data.path]
- * @param {string} [#data.domain]
- * @param {string} [#data.expires]
- * @param {string} [#data.maxAge]
- * @param {boolean} [#data.secure]
- * @param {string} [#data.samesite]
- * @param {boolean} [#data.httpOnly]
- * @returns {void}
- */
-export function setCookie(name, value, data = {}) {
-    const { path, domain, expires, maxAge, secure, samesite, httpOnly } = data;
+export function createCookie(name, value, { path, domain, expires, maxAge, secure, samesite, httpOnly } = {}) {
     let cookie = `${name}=${value}`;
     if (path) cookie += `;path=${path}`;
     if (domain) cookie += `;domain=${domain}`;
@@ -38,39 +25,42 @@ export function setCookie(name, value, data = {}) {
     if (secure) cookie += `;secure`;
     if (samesite) cookie += `;samesite=${samesite}`;
     if (httpOnly) cookie += `;httpOnly`;
-    document.cookie = cookie;
+    return cookie;
 }
 
-/**
- * Deletes a cookie
- * @param {string} name
- * @param {object} [#data]
- * @param {string} [#data.path]
- * @param {string} [#data.domain]
- * @returns {void}
- */
-export function deleteCookie(name, data = {}) {
-    data.maxAge = 0;
-    data.expires = "Thu, 01 Jan 1970 00:00:00 UTC";
-    setCookie(name, "", data);
+export function setCookie(name, value, options) {
+    document.cookie = createCookie(name, value, options);
+}
+
+export function deleteCookie(name, options = {}) {
+    options.maxAge = 0;
+    options.expires = new Date(0).toUTCString();
+    setCookie(name, "", options);
 }
 
 String.prototype.capitalizeFirstLetter = function () {
     return this[0].toUpperCase() + this.slice(1);
 };
 
-export function parseSize(size) {
-    const units = ["o", "Ko", "Mo", "Go", "To"];
-    let unit = 0;
-    while (size >= 1024) {
+export function parseSize(size, unit) {
+    let u = 0;
+    while (size >= 1024 && u < BYTES_UNITS.length - 1) {
         size /= 1024;
-        unit++;
+        u++;
     }
-    return size.toFixed(2) + units[unit];
+    let parsed = size.toFixed(2);
+    if (unit) {
+        parsed += BYTES_UNITS[u] + unit;
+    }
+    return parsed;
 }
 
-export function parseDate(date) {
-    return new Date(date).toLocaleString();
+export function parseTime(time) {
+    return {
+        h: ~~(time / 3600),
+        m: ~~((time % 3600) / 60),
+        s: ~~(time % 60),
+    };
 }
 
 export async function wait(ms) {
@@ -132,7 +122,3 @@ export async function waitForTransition(elem, { propertyName } = {}) {
         });
     });
 }
-
-window.addEventListener("load", async () => {
-    document.body.toggleAttribute("mobile", IS_MOBILE);
-});
