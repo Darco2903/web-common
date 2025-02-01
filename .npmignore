@@ -1,0 +1,7 @@
+# dev
+.vscode/
+.gitattributes
+TODO.md
+
+# tarballs
+web-common-*.tgz
