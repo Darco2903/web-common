@@ -1,10 +1,10 @@
 export type Cookie = {
     path?: string;
     domain?: string;
-    expires?: number | string;
+    expires?: string;
     maxAge?: number;
     secure?: boolean;
-    sameSite?: "strict" | "lax";
+    sameSite?: "Strict" | "Lax" | "None";
     httpOnly?: boolean;
 };
 
