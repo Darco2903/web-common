@@ -42,7 +42,7 @@ String.prototype.capitalizeFirstLetter = function () {
     return this[0].toUpperCase() + this.slice(1);
 };
 
-String.prototype.shuffle = function () {
+Array.prototype.shuffle = function () {
     let currentIndex = this.length;
     while (currentIndex != 0) {
         let randomIndex = Math.floor(Math.random() * currentIndex);
