@@ -42,6 +42,15 @@ String.prototype.capitalizeFirstLetter = function () {
     return this[0].toUpperCase() + this.slice(1);
 };
 
+String.prototype.shuffle = function () {
+    let currentIndex = this.length;
+    while (currentIndex != 0) {
+        let randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [this[currentIndex], this[randomIndex]] = [this[randomIndex], this[currentIndex]];
+    }
+};
+
 export function parseSize(size, unit) {
     let u = 0;
     while (size >= 1024 && u < BYTES_UNITS.length - 1) {

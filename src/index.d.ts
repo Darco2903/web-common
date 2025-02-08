@@ -24,6 +24,10 @@ declare global {
     interface String {
         capitalizeFirstLetter(): string;
     }
+
+    interface Array<T> {
+        shuffle(): void;
+    }
 }
 
 export function parseSize(size: string, unit?: "B" | "o"): string;
