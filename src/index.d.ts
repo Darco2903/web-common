@@ -34,6 +34,7 @@ export function parseSize(size: string, unit?: "B" | "o"): string;
 export function parseTime(time: string): types.MinimalTime;
 
 export function wait(ms: number): Promise<void>;
+export function waitFor(condition: () => boolean, timeout?: number, interval?: number): Promise<void>;
 
 export function waitForEvent<K extends keyof HTMLElementEventMap>(elem: HTMLElement, type: K): Promise<HTMLElementEventMap[K]>;
 export function waitForAnim(elem: HTMLElement, animName?: string): Promise<void>;

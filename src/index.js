@@ -76,6 +76,23 @@ export async function wait(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+export async function waitFor(condition, timeout = 0, interval = 100) {
+    let t = () => false;
+    let start;
+
+    if (timeout > 0) {
+        start = Date.now();
+        t = () => Date.now() - start > timeout;
+    }
+
+    while (!condition()) {
+        if (t()) {
+            throw new Error("Timeout");
+        }
+        await wait(interval);
+    }
+}
+
 /**
  * @param {HTMLElement} elem
  */
