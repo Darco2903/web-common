@@ -39,7 +39,7 @@ export function deleteCookie(name, options = {}) {
 }
 
 String.prototype.capitalizeFirstLetter = function () {
-    return this[0].toUpperCase() + this.slice(1);
+    return this[0].toUpperCase() + this.slice(1).toLowerCase();
 };
 
 Array.prototype.shuffle = function () {
