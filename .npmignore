@@ -2,6 +2,8 @@
 .vscode/
 .gitattributes
 TODO.md
+src/
+tsconfig.json
 
 # tarballs
 web-common-*.tgz
