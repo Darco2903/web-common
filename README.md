@@ -3,7 +3,6 @@
 ## Description
 
 This repository contains common functionality for web applications.
-You can find all the functions [here](./dist/index.d.ts).
 
 ## Installation
 
