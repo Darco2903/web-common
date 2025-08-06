@@ -1,7 +1,7 @@
 export type Cookie = {
     path?: string;
     domain?: string;
-    expires?: string;
+    expires?: Date | string;
     maxAge?: number;
     secure?: boolean;
     sameSite?: "Strict" | "Lax" | "None";

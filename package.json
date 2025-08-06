@@ -1,6 +1,6 @@
 {
     "name": "web-common",
-    "version": "0.5.1",
+    "version": "0.6.0",
     "author": "Darco2903",
     "description": "",
     "private": true,
@@ -10,9 +10,15 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc",
-        "prepack": "npm run build"
+        "prepack": "npm run build",
+        "test": "vitest",
+        "test:ui": "vitest --ui"
     },
     "devDependencies": {
-        "typescript": "^5.8.3"
+        "@vitest/ui": "^3.2.4",
+        "happy-dom": "^18.0.1",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.8.3",
+        "vitest": "^3.2.4"
     }
 }

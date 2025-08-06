@@ -3,7 +3,10 @@
 .gitattributes
 TODO.md
 src/
+tsconfig.build.json
 tsconfig.json
+tests/
+vitest.config.ts
 
 # tarballs
 web-common-*.tgz
