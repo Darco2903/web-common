@@ -7,6 +7,7 @@ tsconfig.build.json
 tsconfig.json
 tests/
 vitest.config.ts
+.github/
 
 # tarballs
 web-common-*.tgz
