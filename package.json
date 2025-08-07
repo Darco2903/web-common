@@ -3,7 +3,6 @@
     "version": "0.6.0",
     "author": "Darco2903",
     "description": "",
-    "private": true,
     "keywords": [],
     "license": "ISC",
     "main": "dist/index.js",
