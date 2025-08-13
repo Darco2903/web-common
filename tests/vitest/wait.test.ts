@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { wait, waitFor, waitForEvent } from "../src";
+import { wait, waitFor, waitForEvent } from "../../src";
 
 const WAIT = 50; // 50ms
 const TIMEOUT = 200; // 200ms

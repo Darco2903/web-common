@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { createCookie, setCookie } from "../src";
+import { createCookie, setCookie } from "../../src";
 
 const EXPIRES = new Date(Date.now() + 1000 * 60 * 60 * 24).toUTCString();
 

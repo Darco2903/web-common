@@ -1,6 +1,6 @@
-import "./prototypes";
+import "./prototypes.js";
 
-export * from "./consts";
-export * from "./cookie";
-export * from "./parser";
-export * from "./wait";
+export * from "./consts.js";
+export * from "./cookie.js";
+export * from "./parser.js";
+export * from "./wait.js";

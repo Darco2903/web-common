@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseSize, parseTime } from "../src";
+import { parseSize, parseTime } from "../../src";
 
 //////////////////////////
 // parseSize

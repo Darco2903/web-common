@@ -35,6 +35,9 @@ jobs:
 
     - name: Run tests
       run: pnpm test
+
+    - name: Run resolve test
+      run: pnpm test:js-resolve
       
     - name: Build project
       run: pnpm pack
