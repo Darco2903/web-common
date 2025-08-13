@@ -36,10 +36,13 @@ jobs:
     - name: Run tests
       run: pnpm test
 
+    - name: Build project
+      run: pnpm build
+
     - name: Run resolve test
       run: pnpm test:js-resolve
       
-    - name: Build project
+    - name: Package release
       run: pnpm pack
 
     - name: Upload release asset
