@@ -1,14 +1,16 @@
-interface String {
-    capitalizeFirstLetter(): string;
+declare global {
+    interface String {
+        capitalizeFirstLetter(): string;
+    }
+
+    interface Array<T> {
+        shuffle(): void;
+    }
 }
 
 String.prototype.capitalizeFirstLetter = function (): string {
     return this[0].toUpperCase() + this.slice(1).toLowerCase();
 };
-
-interface Array<T> {
-    shuffle(): void;
-}
 
 Array.prototype.shuffle = function (): void {
     let currentIndex = this.length;
