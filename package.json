@@ -1,5 +1,5 @@
 {
-    "name": "web-common",
+    "name": "@darco2903/web-common",
     "version": "0.6.2",
     "author": "Darco2903",
     "description": "",
@@ -8,12 +8,16 @@
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "type": "module",
+    "packageManager": "pnpm@10.25.0",
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
+    },
     "scripts": {
         "build": "tsc",
         "prepack": "npm run build",
         "test": "vitest",
         "test:ui": "vitest --ui",
-        "clean": "rimraf dist"
+        "clean": "rimraf -g dist darco2903-web-common-*.tgz"
     },
     "devDependencies": {
         "@vitest/ui": "^3.2.4",
