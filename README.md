@@ -2,16 +2,8 @@
 
 ## Description
 
-This repository contains common functionality for web applications.
+This package contains common functionality for web applications such as pretty printing, date formatting, cookie handling, animation utilities, and more.
 
 ## Installation
 
-```bash
-npm install web-common-<version>.tgz
-```
-
-## Usage
-
-```javascript
-import * as common from "web-common";
-```
+You can found the package here: [**@darco2903/web-common**](https://github.com/users/Darco2903/packages/npm/package/web-common)
