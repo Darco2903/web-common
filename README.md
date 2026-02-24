@@ -6,4 +6,4 @@ This package contains common functionality for web applications such as pretty p
 
 ## Installation
 
-You can found the package here: [**@darco2903/web-common**](https://github.com/users/Darco2903/packages/npm/package/web-common)
+You can find the package here: [**@darco2903/web-common**](https://github.com/users/Darco2903/packages/npm/package/web-common)
