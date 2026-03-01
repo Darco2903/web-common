@@ -10,4 +10,4 @@ vitest.config.ts
 .github/
 
 # tarballs
-web-common-*.tgz
+darco2903-web-common-*.tgz
