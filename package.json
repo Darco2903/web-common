@@ -17,7 +17,7 @@
     },
     "scripts": {
         "build": "tsc",
-        "prepack": "npm run build",
+        "prepack": "pnpm build",
         "test": "vitest",
         "test:ui": "vitest --ui",
         "clean": "rimraf -g dist darco2903-web-common-*.tgz"
