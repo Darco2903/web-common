@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { parseSize, parseTime } from "../../src";
+import { Hour, Minute, Second } from "@darco2903/secondthought";
 
 //////////////////////////
 // parseSize
@@ -64,5 +65,9 @@ describe("parseTime", () => {
 
     it("should parse 3661 seconds to '1h 1m 1s'", () => {
         expect(parseTime(3661)).toEqual({ h: 1, m: 1, s: 1 });
+    });
+
+    it("should parse 3661 seconds to '1h 1m 1s' with Time objects", () => {
+        expect(parseTime(new Hour(1).add(new Minute(1).add(new Second(1))))).toEqual({ h: 1, m: 1, s: 1 });
     });
 });

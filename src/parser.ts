@@ -1,3 +1,5 @@
+import type { Time } from "@darco2903/secondthought";
+
 export type MinimalTime = {
     h: number;
     m: number;
@@ -38,10 +40,15 @@ export function parseSize(size: number, options: { unit?: "B" | "o"; precision?:
     return parsed;
 }
 
-export function parseTime(time: number): MinimalTime {
+/**
+ * Parses a time value (in seconds or as a Time object) into an object containing hours, minutes, and seconds.
+ * @param time - The time value to parse
+ */
+export function parseTime(time: number | Time): MinimalTime {
+    const seconds = typeof time === "number" ? time : time.toSecond().time;
     return {
-        h: ~~(time / 3600),
-        m: ~~((time % 3600) / 60),
-        s: ~~(time % 60),
+        h: ~~(seconds / 3600),
+        m: ~~((seconds % 3600) / 60),
+        s: ~~(seconds % 60),
     };
 }

@@ -1,13 +1,18 @@
-export async function wait(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+import type { Time } from "@darco2903/secondthought";
+
+export async function wait(ms: number | Time): Promise<void> {
+    const msValue: number = typeof ms === "number" ? ms : ms.toMillisecond().time;
+    return new Promise((resolve) => setTimeout(resolve, msValue));
 }
 
-export async function waitFor(condition: () => boolean, timeout: number = 0, interval: number = 100): Promise<void> {
+export async function waitFor(condition: () => boolean, timeout: number | Time = 0, interval: number | Time = 100): Promise<void> {
     let t = () => false;
 
-    if (timeout > 0) {
+    const timeoutMs: number = typeof timeout === "number" ? timeout : timeout.toMillisecond().time;
+
+    if (timeoutMs > 0) {
         const start = Date.now();
-        t = () => Date.now() - start > timeout;
+        t = () => Date.now() - start > timeoutMs;
     }
 
     while (!condition()) {

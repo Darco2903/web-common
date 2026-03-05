@@ -1,8 +1,10 @@
+import type { Time } from "@darco2903/secondthought";
+
 export type Cookie = {
     path?: string;
     domain?: string;
     expires?: Date | string;
-    maxAge?: number;
+    maxAge?: number | Time;
     secure?: boolean;
     sameSite?: "Strict" | "Lax" | "None";
     httpOnly?: boolean;
@@ -22,13 +24,16 @@ export function getCookie(name: string): string | undefined {
 export function createCookie(
     name: string,
     value: string,
-    { path, domain, expires, maxAge, secure, sameSite, httpOnly }: Cookie = {}
+    { path, domain, expires, maxAge, secure, sameSite, httpOnly }: Cookie = {},
 ): string {
     let cookie = `${name}=${value}`;
     if (path) cookie += `;path=${path}`;
     if (domain) cookie += `;domain=${domain}`;
     if (expires) cookie += `;expires=${expires}`;
-    if (maxAge) cookie += `;max-age=${maxAge}`;
+    if (maxAge !== undefined) {
+        const maxAgeSec: number = typeof maxAge === "number" ? maxAge : maxAge.toSecond().time;
+        cookie += `;max-age=${maxAgeSec}`;
+    }
     if (secure) cookie += `;secure`;
     if (sameSite) cookie += `;samesite=${sameSite}`;
     if (httpOnly) cookie += `;httpOnly`;

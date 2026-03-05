@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { createCookie, setCookie } from "../../src";
+import { Hour, Minute, Second } from "@darco2903/secondthought";
 
 const EXPIRES = new Date(Date.now() + 1000 * 60 * 60 * 24).toUTCString();
 
@@ -28,6 +29,20 @@ describe("createCookie", () => {
     it("should create a cookie string with only the name and value", () => {
         const cookie = createCookie("test", "value");
         expect(cookie).toBe("test=value");
+    });
+
+    it("should create a cookie with Time object as maxAge", () => {
+        const cookie = createCookie("test", "value", {
+            maxAge: new Hour(1),
+        });
+        expect(cookie).toBe("test=value;max-age=3600");
+    });
+
+    it("should create a cookie with Time object as maxAge with operations", () => {
+        const cookie = createCookie("test", "value", {
+            maxAge: new Minute(10).add(new Second(30)),
+        });
+        expect(cookie).toBe("test=value;max-age=630");
     });
 });
 
