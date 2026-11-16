@@ -1,5 +1,5 @@
 import { DOMAIN } from "./consts.js";
-import { deleteCookie, getCookie, setCookie } from "./cookie.js";
+import { deleteCookie, getCookies, setCookie } from "./cookie.js";
 
 /**
  * Settings shared by every app of the domain, kept in cookies of the parent domain so a choice
@@ -31,18 +31,29 @@ export function saveSetting(name: SharedSetting, value: string): void {
  *
  * The cookie is the source of truth: an invalid cookie is deleted, and localStorage is only read
  * to migrate once the value saved by older app versions (moved to the cookie, then removed).
+ *
+ * Several cookies can share the name (e.g. a host-only or deeper-path one listed before the parent
+ * domain one): the first valid one wins, and the invalid ones are cleaned up without losing it.
  */
 export function loadSetting<T extends string>(name: SharedSetting, values: readonly T[]): T | undefined {
     if (!isBrowser) return undefined;
     const isValid = (value: string | null | undefined): value is T => values.includes(value as T);
 
-    const cookie = getCookie(name);
-    if (isValid(cookie)) {
+    const cookies = getCookies(name);
+    const valid = cookies.find(isValid);
+    if (valid !== undefined) {
+        if (!cookies.every(isValid)) {
+            // drop the host-only variant, then (re)write the parent domain one with the valid value:
+            // this also overwrites an invalid parent domain cookie
+            deleteCookie(name, { path: "/" });
+            saveSetting(name, valid);
+        }
         // a value left by an older version must not come back if the cookie expires
         localStorage.removeItem(name);
-        return cookie;
+        return valid;
     }
-    if (cookie !== undefined) {
+    if (cookies.length > 0) {
+        deleteCookie(name, { path: "/" });
         deleteCookie(name, { path: "/", domain: DOMAIN });
     }
 

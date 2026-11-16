@@ -20,9 +20,20 @@ export function hasCookie(name: string): boolean {
  * Everything after the first "=" is returned, so values containing "=" are kept whole.
  */
 export function getCookie(name: string): string | undefined {
+    return getCookies(name)[0];
+}
+
+/**
+ * The values of every cookie with exactly this name, in `document.cookie` order. Several cookies
+ * can share a name when their domain or path differ (e.g. a host-only one and a parent domain one),
+ * the browser lists the most specific path first. Values are returned whole, like `getCookie`.
+ */
+export function getCookies(name: string): string[] {
     const prefix = name + "=";
-    const row = document.cookie.split(/;\s*/).find((row) => row.startsWith(prefix));
-    return row?.slice(prefix.length);
+    return document.cookie
+        .split(/;\s*/)
+        .filter((row) => row.startsWith(prefix))
+        .map((row) => row.slice(prefix.length));
 }
 
 export function createCookie(

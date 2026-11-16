@@ -1,5 +1,5 @@
-import { describe, it, expect, afterEach } from "vitest";
-import { createCookie, getCookie, hasCookie, setCookie } from "../../src/index.js";
+import { describe, it, expect, afterEach, vi } from "vitest";
+import { createCookie, getCookie, getCookies, hasCookie, setCookie } from "../../src/index.js";
 import { Hour, Minute, Second } from "@darco2903/secondthought";
 
 const EXPIRES = new Date(Date.now() + 1000 * 60 * 60 * 24).toUTCString();
@@ -72,7 +72,7 @@ describe("setCookie", () => {
 });
 
 //////////////////////////
-// getCookie / hasCookie
+// getCookie / getCookies / hasCookie
 
 /** happy-dom keeps an empty cookie on max-age=0 (browsers remove it), an expires-only write does remove it */
 function removeCookie(name: string) {
@@ -109,6 +109,36 @@ describe("getCookie", () => {
 
     it("should return undefined for a missing cookie", () => {
         expect(getCookie("missing")).toBeUndefined();
+    });
+});
+
+describe("getCookies", () => {
+    afterEach(() => {
+        vi.restoreAllMocks();
+        for (const name of ["lang", "language", "token"]) removeCookie(name);
+    });
+
+    it("should return every value of the exact name, in document.cookie order", () => {
+        // happy-dom keeps one cookie per name, browsers list one per domain/path
+        vi.spyOn(document, "cookie", "get").mockReturnValue("lang=en; language=de; lang=fr; xlang=it");
+        expect(getCookies("lang")).toEqual(["en", "fr"]);
+        expect(getCookie("lang")).toBe("en");
+    });
+
+    it("should match the exact name", () => {
+        setCookie("language", "de");
+        expect(getCookies("lang")).toEqual([]);
+        setCookie("lang", "fr");
+        expect(getCookies("lang")).toEqual(["fr"]);
+    });
+
+    it("should keep values containing '='", () => {
+        setCookie("token", "a=b==");
+        expect(getCookies("token")).toEqual(["a=b=="]);
+    });
+
+    it("should return an empty array for a missing cookie", () => {
+        expect(getCookies("missing")).toEqual([]);
     });
 });
 

@@ -29,8 +29,9 @@ saveSetting("lang", "fr");
 
 - `saveSetting(name, value)` writes the cookie.
 - `loadSetting(name, values)` returns the saved value when it is one of `values`, else `undefined` (the app picks its default).
-  - A cookie with a value outside `values` is deleted.
+  - Several cookies can share the name (e.g. a host-only or deeper-path one listed before the parent domain one): the first valid one is returned. Invalid ones are deleted (host-only and parent domain, `path=/`), and when a valid one exists it is written again on the parent domain so it is never lost.
   - When there is no valid cookie, a valid value in `localStorage` under the same key (saved by older app versions) is moved once to the cookie and removed from `localStorage`. When the cookie is valid, a leftover `localStorage` key is removed.
+  - Side effects: `loadSetting` may write and delete cookies and remove the `localStorage` key. Values are compared as stored, they are not URI-decoded.
 - Outside a browser both functions do nothing.
 
 ### Cookie contract
