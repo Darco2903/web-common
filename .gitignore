@@ -1,5 +1,10 @@
+# dev
 node_modules/
 .vscode/
+*_.*
+*_
+
+# build
 dist/
 
 # tarballs
