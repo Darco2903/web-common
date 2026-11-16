@@ -10,15 +10,19 @@ export type Cookie = {
     httpOnly?: boolean;
 };
 
+/** Whether a cookie with exactly this name exists ("lang" does not match a "language" cookie) */
 export function hasCookie(name: string): boolean {
-    return document.cookie.includes(name);
+    return getCookie(name) !== undefined;
 }
 
+/**
+ * The value of the cookie with exactly this name ("lang" does not match a "language" cookie).
+ * Everything after the first "=" is returned, so values containing "=" are kept whole.
+ */
 export function getCookie(name: string): string | undefined {
-    return document.cookie
-        .split("; ")
-        .find((row) => row.startsWith(name))
-        ?.split("=")[1];
+    const prefix = name + "=";
+    const row = document.cookie.split(/;\s*/).find((row) => row.startsWith(prefix));
+    return row?.slice(prefix.length);
 }
 
 export function createCookie(

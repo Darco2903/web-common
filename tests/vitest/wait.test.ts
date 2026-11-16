@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { wait, waitFor, waitForEvent } from "../../src";
+import { wait, waitFor, waitForEvent } from "../../src/index.js";
 import { Millisecond, Second } from "@darco2903/secondthought";
 
 const WAIT = 50; // 50ms

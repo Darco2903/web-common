@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseSize, parseTime } from "../../src";
+import { parseSize, parseTime } from "../../src/index.js";
 import { Hour, Minute, Second } from "@darco2903/secondthought";
 
 //////////////////////////
